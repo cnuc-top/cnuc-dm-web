@@ -29,13 +29,30 @@ export const constantRouterMap = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    name: 'Dashboard',
+    name: '控制台',
     hidden: true,
     children: [{
       path: 'dashboard',
       component: () => import('@/pages/dashboard/index')
     }]
   },
+
+  {
+    path: '/buildings',
+    component: Layout,
+    redirect: '/buildings/list',
+    name: 'Buildings',
+    meta: { title: '建筑管理', icon: 'example' },
+    children: [
+      {
+        path: 'list',
+        name: 'Buildings-list',
+        component: () => import('@/pages/buildings/index'),
+        meta: { title: '所有建筑', icon: 'table' }
+      }
+    ]
+  },
+
 
   {
     path: '/example',
