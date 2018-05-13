@@ -1,17 +1,10 @@
 <style lang='stylus' scoped>
-.el-header {
-  padding-top: 15px;
-  height: auto;
-  background: #FFF;
-}
 </style>
 <template>
   <div class="page dm-page">
-
     <div class="dm-header">
       <el-button type="primary" @click="dialogCreateOpen">添加</el-button>
     </div>
-
     <div class="dm-main">
       <div class="dm-card">
         <el-table :data="list">

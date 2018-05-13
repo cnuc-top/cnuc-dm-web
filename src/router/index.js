@@ -22,7 +22,11 @@ import Layout from '@/pages/layout/Layout'
   }
 **/
 export const constantRouterMap = [
-  { path: '/login', component: () => import('@/pages/login/index'), hidden: true },
+  {
+    path: '/login',
+    component: () => import('@/pages/login/index'),
+    hidden: true
+  },
   { path: '/404', component: () => import('@/pages/404'), hidden: true },
 
   {
@@ -31,10 +35,12 @@ export const constantRouterMap = [
     redirect: '/dashboard',
     name: '控制台',
     hidden: true,
-    children: [{
-      path: 'dashboard',
-      component: () => import('@/pages/dashboard/index')
-    }]
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/pages/dashboard/index')
+      }
+    ]
   },
 
   {
@@ -48,11 +54,16 @@ export const constantRouterMap = [
         path: 'list',
         name: 'Buildings-list',
         component: () => import('@/pages/buildings/index'),
-        meta: { title: '所有建筑', icon: 'table' }
+        meta: { title: '所有建筑' }
+      },
+      {
+        path: 'svgfiles',
+        name: 'Buildings-svgfiles',
+        component: () => import('@/pages/buildings/svgfiles'),
+        meta: { title: '结构管理' }
       }
     ]
   },
-
 
   {
     path: '/example',
@@ -97,4 +108,3 @@ export default new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
-
