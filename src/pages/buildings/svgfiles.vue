@@ -3,7 +3,9 @@
 <template>
   <div class="page dm-page">
     <div class="dm-header">
-
+      <el-radio-group v-model="showMode" size="mini">
+        <el-radio label="1" border v-for="(item, index) in BUILD_SHOW_MODE_DETAIL" :key="item.id" :label="item.id">{{item.name}}</el-radio>
+      </el-radio-group>
     </div>
     <div class="dm-main">
       <div class="">
@@ -33,14 +35,17 @@
 <script>
 import BTL from '@/common/api/btl'
 import { deepClone } from '@/utils/object'
-import { DIALOG_MODE, DIALOG_MODE_DETAIL } from '@/common/const'
+import { BUILD_SHOW_MODE, BUILD_SHOW_MODE_DETAIL } from '@/common/const/cnuc'
+import { DIALOG_MODE } from '@/common/const'
 import { BUILD_INFO } from '@/common/const/form'
 import BuildList from '@/components/BuildList/BuildList'
 
 export default {
-  components: { BuildList },
+  components: { BuildList, BUILD_SHOW_MODE, BUILD_SHOW_MODE_DETAIL },
   data() {
     return {
+      showMode: BUILD_SHOW_MODE.MEDIA,
+      BUILD_SHOW_MODE_DETAIL,
       DIALOG_MODE,
       city: '',
       list: [],

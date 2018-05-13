@@ -1,3 +1,19 @@
+const BUILD_SHOW_MODE = {
+  MEDIA: 1,
+  STRUCTURE: 2
+}
+
+const BUILD_SHOW_MODE_DETAIL = [
+  {
+    id: BUILD_SHOW_MODE.MEDIA,
+    name: '图文'
+  },
+  {
+    id: BUILD_SHOW_MODE.STRUCTURE,
+    name: '结构'
+  }
+]
+
 // 贡献类型
 const CONTRIBUTE_TYPE = {
   DESIGN: 1,
@@ -81,6 +97,8 @@ const COMPANY_TYPE_DETAIL = [
 ]
 
 module.exports = {
+  BUILD_SHOW_MODE,
+  BUILD_SHOW_MODE_DETAIL,
   CONTRIBUTE_TYPE,
   CONTRIBUTE_TYPE_DETAIL,
   SVGFILE_TYPE,

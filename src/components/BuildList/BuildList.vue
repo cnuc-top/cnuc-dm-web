@@ -2,7 +2,6 @@
 @require '../../styles/cnuc/var/color.styl';
 
 .build-list {
-
   display: flex;
   flex-wrap: wrap;
 
@@ -20,9 +19,7 @@
   <div class="build-list">
     <el-row :gutter="24">
       <el-col :span="6" v-for="(item, index) in data" :key="index">
-        <router-link :to="'./buildings/' + item.id">
-          <build-item :data="item"></build-item>
-        </router-link>
+        <build-item :data="item"></build-item>
       </el-col>
     </el-row>
   </div>

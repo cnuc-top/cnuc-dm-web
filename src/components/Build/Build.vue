@@ -47,6 +47,7 @@ import BuildBase from '@/components/Build/BuildBase'
 import BuildStructure from '@/components/Build/BuildStructure'
 import BuildSecound from '@/components/Build/BuildSecound'
 import BuildFrame from '@/components/Build/BuildFrame'
+import { SVGFILE_TYPE } from '@/common/const/cnuc'
 export default {
   components: { BuildBase, BuildStructure, BuildSecound, BuildFrame },
 
@@ -75,21 +76,16 @@ export default {
 
   data() {
     return {
-
-      // process: {
-      //   layers: parseInt(this.data.layers * .7),
-      //   seconds: parseInt(this.data.layers * .5),
-      //   basic: 100,
-      // }
     }
   },
 
   computed: {
     structure() {
-      return this.data.svgfiles.find(_ => _.type === 1)['content']
+      const svg = this.data.svgfiles.find(_ => _.type === SVGFILE_TYPE.STRUCTURE)
+      return svg ? svg['content'] : ''
     },
     secounds() {
-      return this.data.svgfiles.filter(_ => _.type === 2)
+      return this.data.svgfiles.filter(_ => _.type === SVGFILE_TYPE.SCOUNDS)
     }
   },
 
