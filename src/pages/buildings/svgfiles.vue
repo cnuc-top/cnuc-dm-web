@@ -3,13 +3,13 @@
 <template>
   <div class="page dm-page">
     <div class="dm-header">
-      <el-radio-group v-model="showMode" size="mini">
+      <el-radio-group v-model="showMode">
         <el-radio label="1" border v-for="(item, index) in BUILD_SHOW_MODE_DETAIL" :key="item.id" :label="item.id">{{item.name}}</el-radio>
       </el-radio-group>
     </div>
     <div class="dm-main">
       <div class="">
-        <build-list :data="list"></build-list>
+        <build-list :show-mode="showMode" :data="list"></build-list>
       </div>
       <el-pagination @size-change="handleSizeChange" @current-change="initList" :current-page.sync="page" :page-sizes="[10, 20, 30, 40]" :page-size.sync="limit" :total="total" layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>

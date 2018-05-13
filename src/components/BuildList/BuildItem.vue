@@ -3,44 +3,60 @@
 
 .build-item {
   position: relative;
-  overflow: hidden;
 
   &:hover {
     .build {
       opacity: 1;
     }
 
-    .build-item__box {
+    .build-item__svg {
       opacity: 1;
     }
   }
 
   &__img {
-    vertical-align: bottom;
-    overflow: hidden;
+    display: block;
     width: 100%;
-    height: 100%;
+    padding-bottom: 66.666666%;
+
+    >img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0px;
+      left: 0px;
+    }
   }
 
-  &__box {
+  &.mode-structure {
+    .build-item__svg {
+      opacity: 1;
+      background: #FFF;
+      margin-bottom: 70px;
+    }
+
+    .build-item__meta {
+      background: $color-primary;
+    }
+  }
+
+  &__svg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     z-index: 1;
-    background: rgba(255, 255, 255, 0.8);
     right: 0px;
     top: 0px;
     bottom: 0px;
     left: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     opacity: 0;
     transition: 0.15s;
+    background: rgba(255, 255, 255, 0.8);
   }
 
   .build {
-    height: auto;
-    // opacity: 0;
-    transform: scale(0.6);
+    transform: scale(0.4);
   }
 
   &__meta {
@@ -51,7 +67,8 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 1;
+    z-index: 2;
+    height: 70px;
   }
 
   &__title {
@@ -67,13 +84,16 @@
 }
 </style>
 <template>
-  <div class="build-item">
-    <img class="build-item__img" :src="data.picUrl" alt="">
+  <div class="build-item" :class="'mode-' + modeClass">
+    <div class="build-item__img">
+      {{modeClass}}
+      <img class="img" :src="data.picUrl" :alt="data.name">
+    </div>
     <div class="build-item__meta">
       <h2 class="build-item__title">{{data.name}}</h2>
       <h3 class="build-item__height">{{data.height}}M</h3>
     </div>
-    <div class="build-item__box">
+    <div class="build-item__svg">
       <build :data="data" :visibles="visibles"></build>
     </div>
   </div>
@@ -81,13 +101,17 @@
 
 <script>
 import Build from '@/components/Build/Build'
+import { BUILD_SHOW_MODE, BUILD_SHOW_MODE_DETAIL } from '@/common/const/cnuc'
 
 export default {
   components: { Build },
 
   props: {
     data: Object,
-
+    showMode: {
+      type: Number,
+      default: BUILD_SHOW_MODE.MEDIA
+    }
   },
 
   data() {
@@ -100,7 +124,11 @@ export default {
     }
   },
 
-  computed: {},
+  computed: {
+    modeClass() {
+      return BUILD_SHOW_MODE_DETAIL.find(_ => _.id === this.showMode)['class']
+    }
+  },
 
   mounted() { },
 

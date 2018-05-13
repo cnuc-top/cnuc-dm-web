@@ -6,11 +6,13 @@ const BUILD_SHOW_MODE = {
 const BUILD_SHOW_MODE_DETAIL = [
   {
     id: BUILD_SHOW_MODE.MEDIA,
-    name: '图文'
+    name: '图文',
+    class: 'media'
   },
   {
     id: BUILD_SHOW_MODE.STRUCTURE,
-    name: '结构'
+    name: '结构',
+    class: 'structure'
   }
 ]
 
