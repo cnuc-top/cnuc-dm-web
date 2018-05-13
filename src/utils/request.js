@@ -49,9 +49,9 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error)
+    const { message } = error
     Message({
-      message: error.message,
+      message,
       type: 'error',
       duration: 5 * 1000
     })

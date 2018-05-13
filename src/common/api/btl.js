@@ -3,10 +3,11 @@ const base = '//localhost:7301'
 
 export default {
   // Building
-  buildingCreate: function buildingCreate(id) {
+  buildingCreate: function buildingCreate(data) {
     return request({
       url: `${base}/v1/buildings`,
-      method: 'post'
+      method: 'post',
+      data
     })
   },
 
@@ -28,7 +29,7 @@ export default {
   buildingList: function buildingList(data) {
     return request({
       url: `${base}/v1/buildings`,
-      data
+      params: data
     })
   },
 
