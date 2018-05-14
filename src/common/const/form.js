@@ -8,6 +8,13 @@ const BUILD_INFO = {
   city: ''
 }
 
+const SVGFILE_FORM = {
+  fill: '',
+  type: 2,
+  content: '',
+}
+
 module.exports = {
-  BUILD_INFO
+  BUILD_INFO,
+  SVGFILE_FORM
 }

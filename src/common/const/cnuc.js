@@ -42,7 +42,7 @@ const SVGFILE_TYPE = {
 const SVGFILE_TYPE_DETAIL = [
   {
     id: SVGFILE_TYPE.STRUCTURE,
-    name: '主题结构'
+    name: '主体结构'
   },
   {
     id: SVGFILE_TYPE.SCOUNDS,

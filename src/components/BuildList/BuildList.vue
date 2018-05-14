@@ -17,7 +17,7 @@
   <div class="build-list">
     <el-row :gutter="24">
       <el-col :span="8" v-for="(item, index) in data" :key="index">
-        <build-item :show-mode="showMode" :data="item"></build-item>
+        <build-item @click="handleClick" :show-mode="showMode" :data="item"></build-item>
       </el-col>
     </el-row>
   </div>
@@ -53,6 +53,10 @@ export default {
 
   mounted() { },
 
-  methods: {}
+  methods: {
+    handleClick(data) {
+      this.$emit('click', data)
+    }
+  }
 }
 </script>

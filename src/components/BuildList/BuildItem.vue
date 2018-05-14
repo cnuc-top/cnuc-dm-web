@@ -84,7 +84,7 @@
 }
 </style>
 <template>
-  <div class="build-item" :class="'mode-' + modeClass">
+  <div @click="handleClick(data)" class="build-item" :class="'mode-' + modeClass">
     <div class="build-item__img">
       {{modeClass}}
       <img class="img" :src="data.picUrl" :alt="data.name">
@@ -132,6 +132,10 @@ export default {
 
   mounted() { },
 
-  methods: {}
+  methods: {
+    handleClick(data) {
+      this.$emit('click', data)
+    }
+  }
 }
 </script>
