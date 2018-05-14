@@ -66,6 +66,12 @@ export default {
     })
   },
 
+  buildingContributes: function buildingContributes(id) {
+    return request({
+      url: `${base}/v1/buildings/${id}/contributes`
+    })
+  },
+
 
   // City
   // cityCreate: function cityCreate(id) {

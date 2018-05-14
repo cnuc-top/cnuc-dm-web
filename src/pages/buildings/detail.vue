@@ -18,6 +18,9 @@
               <el-tab-pane label="相关单位" name="相关单位">
                 <companies @update="init" :data="companies" :info="info"></companies>
               </el-tab-pane>
+              <el-tab-pane label="贡献管理" name="贡献管理">
+                <contributes @update="init" :data="contributes" :info="info"></contributes>
+              </el-tab-pane>
             </el-tabs>
           </div>
         </el-col>
@@ -31,8 +34,9 @@ import BTL from '@/common/api/btl'
 import Build from '@/components/Build/Build'
 import Processes from './processes'
 import Companies from './companies'
+import Contributes from './contributes'
 export default {
-  components: { Build, Processes, Companies },
+  components: { Build, Processes, Companies, Contributes },
 
   props: {
   },
@@ -45,7 +49,8 @@ export default {
       process: {},
       processes: [],
       companies: [],
-      activeName: '相关单位',
+      contributes: [],
+      activeName: '相关单位'
     }
   },
 
@@ -64,6 +69,7 @@ export default {
       this.data = data
       this.info = data
       this.companies = await BTL.buildingCompanies(this.id)
+      this.contributes = await BTL.buildingContributes(this.id)
     },
     handleProcessPreview(data) {
       this.process = data

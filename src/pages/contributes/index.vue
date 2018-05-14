@@ -45,32 +45,26 @@
 
     <el-dialog :title="rowDialog.title" :visible.sync="rowDialog.visible">
       <el-form :model="rowDialog.form" label-width="100px">
-
         <el-form-item label="日期">
           <el-date-picker v-model="rowDialog.form.date" type="date" placeholder="选择日期"></el-date-picker>
         </el-form-item>
         <el-form-item label="介绍">
           <el-input v-model="rowDialog.form.content"></el-input>
         </el-form-item>
-
         <el-form-item label="建筑">
           <el-input v-model="rowDialog.form.bid"></el-input>
         </el-form-item>
-
         <el-form-item label="类型">
           <el-radio-group v-model="rowDialog.form.type">
             <el-radio v-for="item in CONTRIBUTE_TYPE_DETAIL" :key="item.id" :label="item.id" border>{{item.name}}</el-radio>
           </el-radio-group>
         </el-form-item>
-
         <el-form-item label="图片">
           <dm-upload :src.sync="rowDialog.form.picUrl"></dm-upload>
         </el-form-item>
-
         <el-form-item label="审核" v-if="rowDialog.mode === DIALOG_MODE.UPDATE">
           <el-checkbox v-model="rowDialog.form.isActive" label="通过审核" border></el-checkbox>
         </el-form-item>
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="rowDialog.visible = false">取 消</el-button>
