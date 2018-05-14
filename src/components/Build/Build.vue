@@ -48,6 +48,8 @@ import BuildStructure from '@/components/Build/BuildStructure'
 import BuildSecound from '@/components/Build/BuildSecound'
 import BuildFrame from '@/components/Build/BuildFrame'
 import { SVGFILE_TYPE } from '@/common/const/cnuc'
+
+
 export default {
   components: { BuildBase, BuildStructure, BuildSecound, BuildFrame },
 
