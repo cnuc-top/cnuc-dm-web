@@ -13,9 +13,11 @@
           <div class="dm-card">
             <el-tabs v-model="activeName">
               <el-tab-pane label="进度管理" name="进度管理">
-                <processes :data="processes" :info="info"></processes>
+                <processes @update="init" :data="processes" :info="info"></processes>
               </el-tab-pane>
-              <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+              <el-tab-pane label="相关单位" name="相关单位">
+                <companies @update="init" :data="companies" :info="info"></companies>
+              </el-tab-pane>
             </el-tabs>
           </div>
         </el-col>
@@ -28,8 +30,9 @@
 import BTL from '@/common/api/btl'
 import Build from '@/components/Build/Build'
 import Processes from './processes'
+import Companies from './companies'
 export default {
-  components: { Build, Processes },
+  components: { Build, Processes, Companies },
 
   props: {
   },
@@ -40,8 +43,9 @@ export default {
       data: null,
       info: {},
       processes: [],
+      companies: [],
       process: {},
-      activeName: '进度管理',
+      activeName: '相关单位',
     }
   },
 
@@ -59,6 +63,8 @@ export default {
       this.processes = processes
       this.data = data
       this.info = data
+
+      this.companies = await BTL.buildingIdCompanies(this.id)
     }
   }
 }

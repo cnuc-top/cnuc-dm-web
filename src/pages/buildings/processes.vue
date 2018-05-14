@@ -20,8 +20,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="日期">
-              <el-date-picker v-model="rowDialog.form.date" type="date" placeholder="选择日期">
-              </el-date-picker>
+              <el-date-picker v-model="rowDialog.form.date" type="date" placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="基础结构">
               <el-slider :min="0" :max="100" v-model="rowDialog.form.basic"></el-slider>
@@ -49,10 +48,9 @@ import BTL from '@/common/api/btl'
 import { deepClone } from '@/utils/object'
 import { DIALOG_MODE, DIALOG_MODE_DETAIL } from '@/common/const'
 import { PROCESS_FORM } from '@/common/const/form'
-import Build from '@/components/Build/Build'
 
 export default {
-  components: { Build },
+  components: {  },
   props: {
     data: Array,
     info: Object
@@ -67,7 +65,6 @@ export default {
         visible: false,
         form: {}
       }
-
     }
   },
 
@@ -76,7 +73,9 @@ export default {
   mounted() { },
 
   methods: {
-
+    init() {
+      this.$emit('update')
+    },
 
     handleProcessAdd() {
       this.rowDialog.form.svgfiles.push(deepClone(SVGFILE_FORM))
@@ -137,10 +136,7 @@ export default {
     handleProcessPreview(data) {
       console.log(this.data)
       this.process = data
-      console.log(data)
     }
-
-
   }
 }
 </script>

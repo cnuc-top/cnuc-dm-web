@@ -85,6 +85,19 @@ export const constantRouterMap = [
   },
 
   {
+    path: '/companies',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'companies-list',
+        component: () => import('@/pages/companies/index'),
+        meta: { title: '单位管理', icon: 'example' }
+      }
+    ]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',

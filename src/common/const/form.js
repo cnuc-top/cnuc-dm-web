@@ -23,8 +23,16 @@ const PROCESS_FORM = {
   second: 0
 }
 
+const COMPANY_FORM = {
+  name: '',
+  type: 1,
+  webUrl: '',
+  picUrl: ''
+}
+
 module.exports = {
   BUILD_INFO,
   SVGFILE_FORM,
-  PROCESS_FORM
+  PROCESS_FORM,
+  COMPANY_FORM
 }

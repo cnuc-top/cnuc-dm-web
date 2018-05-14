@@ -45,6 +45,12 @@ export default {
     })
   },
 
+  buildingIdCompanies: function buildingIdCompanies(id) {
+    return request({
+      url: `${base}/v1/buildings/${id}/companies`
+    })
+  },
+
   // City
   // cityCreate: function cityCreate(id) {
   //   return request({
@@ -118,6 +124,38 @@ export default {
       url: `${base}/v1/processes/${id}`,
       method: 'put',
       data
+    })
+  },
+
+
+  // Companies
+  companyCreate: function companyCreate(data) {
+    return request({
+      url: `${base}/v1/companies`,
+      method: 'post',
+      data
+    })
+  },
+
+  companyDelete: function companyDelete(id) {
+    return request({
+      url: `${base}/v1/companies/${id}`,
+      method: 'delete'
+    })
+  },
+
+  companyUpdate: function companyUpdate(id, data) {
+    return request({
+      url: `${base}/v1/companies/${id}`,
+      method: 'put',
+      data
+    })
+  },
+
+  companyList: function companyList(data) {
+    return request({
+      url: `${base}/v1/companies`,
+      params: data
     })
   },
 
