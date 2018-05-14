@@ -13,7 +13,7 @@
           <div class="dm-card">
             <el-tabs v-model="activeName">
               <el-tab-pane label="进度管理" name="进度管理">
-                <processes @update="init" :data="processes" :info="info"></processes>
+                <processes @preview="handleProcessPreview" @update="init" :data="processes" :info="info"></processes>
               </el-tab-pane>
               <el-tab-pane label="相关单位" name="相关单位">
                 <companies @update="init" :data="companies" :info="info"></companies>
@@ -42,9 +42,9 @@ export default {
       id: null,
       data: null,
       info: {},
+      process: {},
       processes: [],
       companies: [],
-      process: {},
       activeName: '相关单位',
     }
   },
@@ -58,13 +58,15 @@ export default {
 
   methods: {
     async init() {
-      const data = await BTL.buildingId(this.id)
+      const data = await BTL.building(this.id)
       const { processes } = data
       this.processes = processes
       this.data = data
       this.info = data
-
-      this.companies = await BTL.buildingIdCompanies(this.id)
+      this.companies = await BTL.buildingCompanies(this.id)
+    },
+    handleProcessPreview(data) {
+      this.process = data
     }
   }
 }

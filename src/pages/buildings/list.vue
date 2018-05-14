@@ -30,11 +30,14 @@
               </span>
             </template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="120">
+          <el-table-column fixed="right" label="操作" width="180">
             <template slot-scope="scope">
-              <el-button @click.native.prevent="dialogUpdateOpen(scope.$index)" type="primary" size="small">
+              <el-button @click.native.prevent="dialogUpdateOpen(scope.$index)" size="small">
                 编辑
               </el-button>
+              <router-link :to="'/buildings/buildings/' + scope.row.id">
+                <el-button type="primary" size="small">进入</el-button>
+              </router-link>
             </template>
           </el-table-column>
         </el-table>

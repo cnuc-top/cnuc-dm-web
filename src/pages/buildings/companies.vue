@@ -1,72 +1,102 @@
-<style lang='stylus'>
-</style>
 <template>
   <div>
-    <el-table @row-click="handleProcessPreview" :data="data" style="width: 100%">
-      <el-table-column prop="id" label="ID"></el-table-column>
-      <el-table-column prop="name" label="名称" width="80"></el-table-column>
+    <el-table :data="data" style="width: 100%">
+      <el-table-column prop="id" label="ID" width="80"></el-table-column>
+      <el-table-column prop="companies.name" label="名称"></el-table-column>
+      <el-table-column prop="type" label="类型">
+        <template slot-scope="scope">
+          <company-type :data="scope.row.companies.type"></company-type>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
-          <el-button @click="dialogUpdateOpen(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="handleProcessDelete(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="handleCompanyDelete(scope.row)" type="text" size="small">移除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="dm-table-footer">
-      <el-button @click="dialogCreateOpen">添加进度</el-button>
+      <el-autocomplete v-model="companyName" :fetch-suggestions="querySearch" @select="handleSelect" placeholder="请输入内容">
+        <template slot-scope="{ item }">
+          <div class="name">{{ item.name }}</div>
+        </template>
+      </el-autocomplete>
+
+      <el-button @click="handleCompanyCreate">添加公司</el-button>
     </div>
-    <el-dialog :title="rowDialog.title" :visible.sync="rowDialog.visible">
-      <el-form :model="rowDialog.form" label-width="100px">
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="日期">
-              <el-date-picker v-model="rowDialog.form.date" type="date" placeholder="选择日期">
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="基础结构">
-              <el-slider :min="0" :max="100" v-model="rowDialog.form.basic"></el-slider>
-            </el-form-item>
-            <el-form-item label="主体结构">
-              <el-slider :min="0" :max="info.layers" v-model="rowDialog.form.layers"></el-slider>
-            </el-form-item>
-            <el-form-item label="二次结构">
-              <el-slider :min="0" :max="info.layers" v-model="rowDialog.form.seconds"></el-slider>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="rowDialog.visible = false">取 消</el-button>
-        <el-button v-if="rowDialog.mode === DIALOG_MODE.CREATE" type="primary" @click="handleProcessCreate">添 加</el-button>
-        <el-button v-if="rowDialog.mode === DIALOG_MODE.UPDATE" type="primary" @click="handleProcessUpdate">确 定</el-button>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
 <script>
 import BTL from '@/common/api/btl'
 import { DIALOG_MODE, DIALOG_MODE_DETAIL } from '@/common/const'
+import CompanyType from '@/components/Company/CompanyType'
 
 export default {
-  components: {},
+  components: { CompanyType },
 
-  props:{
-    info: Object
+  props: {
+    info: Object,
+    data: Array
   },
 
   data() {
     return {
+      companyAll: [],
+      companyName: '',
+      companyId: ''
     }
   },
 
   computed: {},
 
   mounted() {
-
-
+    this.initList()
   },
 
-  methods: {}
+  methods: {
+    init() {
+      this.$emit('update')
+    },
+    async initList() {
+      this.companyAll = await BTL.companyList()
+    },
+    createFilter(queryString) {
+      return (restaurant) => {
+        return (restaurant.name.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+      }
+    },
+
+    querySearch(queryString, cb) {
+      var restaurants = this.companyAll
+      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
+      cb(results)
+    },
+
+    async handleCompanyDelete(data) {
+      await BTL.buildingCompaniesDelete(data.id)
+      this.$message({
+        type: 'success',
+        message: '删除成功!'
+      })
+      this.init()
+    },
+
+    handleSelect(data) {
+      this.companyName = data.name
+      this.companyId = data.id
+    },
+
+    async handleCompanyCreate() {
+      const id = this.companyId
+      const bid = this.info.id
+      const ret = await BTL.buildingCompaniesCreate(bid, { id })
+      this.$message({
+        message: '添加成功',
+        type: 'success'
+      })
+      this.init()
+    },
+
+  }
 }
 </script>

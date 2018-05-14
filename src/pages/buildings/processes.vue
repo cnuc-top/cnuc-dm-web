@@ -134,8 +134,7 @@ export default {
     },
 
     handleProcessPreview(data) {
-      console.log(this.data)
-      this.process = data
+      this.$emit('preview', data)
     }
   }
 }

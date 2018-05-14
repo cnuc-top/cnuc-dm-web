@@ -33,23 +33,39 @@ export default {
     })
   },
 
-  buildingId: function buildingId(id) {
+  building: function building(id) {
     return request({
       url: `${base}/v1/buildings/${id}`
     })
   },
 
-  buildingIdContribute: function buildingIdContribute(id) {
+  buildingContribute: function buildingContribute(id) {
     return request({
       url: `${base}/v1/buildings/${id}/contributes`
     })
   },
 
-  buildingIdCompanies: function buildingIdCompanies(id) {
+  buildingCompaniesCreate: function buildingCompaniesCreate(id, data) {
+    return request({
+      url: `${base}/v1/buildings/${id}/companies`,
+      method: 'post',
+      data
+    })
+  },
+
+  buildingCompaniesDelete: function buildingCompaniesDelete(id) {
+    return request({
+      url: `${base}/v1/buildings/${id}/companies`,
+      method: 'delete'
+    })
+  },
+
+  buildingCompanies: function buildingCompanies(id) {
     return request({
       url: `${base}/v1/buildings/${id}/companies`
     })
   },
+
 
   // City
   // cityCreate: function cityCreate(id) {

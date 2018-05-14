@@ -68,18 +68,6 @@ export const constantRouterMap = [
         name: 'Buildings-svgfiles',
         component: () => import('@/pages/buildings/svgfiles'),
         meta: { title: '结构管理' }
-      },
-      {
-        path: 'processes',
-        name: 'Buildings-processes',
-        component: () => import('@/pages/buildings/processes'),
-        meta: { title: '进度管理' }
-      },
-      {
-        path: 'companies',
-        name: 'Buildings-companies',
-        component: () => import('@/pages/buildings/companies'),
-        meta: { title: '公司管理' }
       }
     ]
   },
