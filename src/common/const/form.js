@@ -30,9 +30,18 @@ const COMPANY_FORM = {
   picUrl: ''
 }
 
+const CONTRIBUTE_FORM = {
+  picUrl: '',
+  content: '',
+  date: '',
+  bid: '',
+  type: 1
+}
+
 module.exports = {
   BUILD_INFO,
   SVGFILE_FORM,
   PROCESS_FORM,
-  COMPANY_FORM
+  COMPANY_FORM,
+  CONTRIBUTE_FORM
 }

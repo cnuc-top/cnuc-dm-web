@@ -1,5 +1,6 @@
 <style lang='stylus'>
-.building-uploader {
+
+.dm-upload {
   position: relative;
   width: 100%;
   padding-bottom: 66.666%;
@@ -28,10 +29,15 @@
       font-size: 30px;
     }
   }
+
+}
+
+.building-uploader {
+
 }
 </style>
 <template>
-  <el-upload :data="{ token }" :action="UPLOAD_URL" :show-file-list="false" :on-success="handleSuccess">
+  <el-upload class="dm-upload" :data="{ token }" :action="UPLOAD_URL" :show-file-list="false" :on-success="handleSuccess">
     <img v-if="src" :src="src" class="img">
     <i v-else class="el-icon-plus building-uploader-icon"></i>
   </el-upload>

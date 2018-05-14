@@ -1,5 +1,3 @@
-<style lang='stylus'>
-</style>
 <template>
   <div class="page dm-page">
     <div class="dm-header">

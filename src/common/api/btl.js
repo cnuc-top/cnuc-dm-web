@@ -127,7 +127,6 @@ export default {
     })
   },
 
-
   // Companies
   companyCreate: function companyCreate(data) {
     return request({
@@ -168,11 +167,10 @@ export default {
     })
   },
 
-  contributeDelete: function contributeDelete(data) {
+  contributeDelete: function contributeDelete(id) {
     return request({
-      url: `${base}/v1/contributes/:id`,
-      method: 'delete',
-      data
+      url: `${base}/v1/contributes/${id}`,
+      method: 'delete'
     })
   },
 
@@ -187,13 +185,7 @@ export default {
   contributeList: function contributeList(data) {
     return request({
       url: `${base}/v1/contributes`,
-      data
-    })
-  },
-
-  contributeId: function contributeId(id) {
-    return request({
-      url: `${base}/v1/contributes/${id}`
+      params: data
     })
   },
 

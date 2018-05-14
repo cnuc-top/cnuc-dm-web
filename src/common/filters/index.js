@@ -8,3 +8,7 @@ export function timeFormat(value, src, format) {
   }
   return val
 }
+
+export function dateTime(value) {
+  return moment(value).format('YYYY年MM月DD日 H:mm:ss')
+}

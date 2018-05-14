@@ -105,7 +105,7 @@ export default {
         mode: DIALOG_MODE.CREATE,
         title: null,
         visible: false,
-        form: BUILD_INFO
+        form: {}
       }
     }
   },
