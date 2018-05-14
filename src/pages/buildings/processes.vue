@@ -2,44 +2,41 @@
 </style>
 <template>
   <div class="page dm-page">
-    <div class="dm-header">
-      <el-radio-group v-model="showMode">
-        <el-radio label="1" border v-for="(item, index) in BUILD_SHOW_MODE_DETAIL" :key="item.id" :label="item.id">{{item.name}}</el-radio>
-      </el-radio-group>
-    </div>
-    <div class="dm-main">
-      <div class="">
+    <el-container>
+      <el-aside>
+        <dm-list :data="list"></dm-list>
+      </el-aside>
+      <el-main>
+        <div class="dm-header">
+          <el-radio-group v-model="showMode">
+            <el-radio label="1" border v-for="(item, index) in BUILD_SHOW_MODE_DETAIL" :key="item.id" :label="item.id">{{item.name}}</el-radio>
+          </el-radio-group>
+        </div>
+      </el-main>
+    </el-container>
+
+    <!-- <div class="dm-main">
         <build-list @click="dialogUpdateOpen" :show-mode="showMode" :data="list"></build-list>
-      </div>
       <el-pagination @size-change="handleSizeChange" @current-change="initList" :current-page.sync="page" :page-sizes="[10, 20, 30, 40]" :page-size.sync="limit" :total="total" layout="total, sizes, prev, pager, next, jumper">
       </el-pagination>
-    </div>
+    </div> -->
 
     <el-dialog :close-on-click-modal="false" class="dialog-build-svg" :title="rowDialog.title" :visible.sync="rowDialog.visible">
       <build :data="rowDialog.form"></build>
-      <el-tabs @tab-add="handleSvgfileAdd" tab-position="left">
-        <el-tab-pane v-for="(item, index) in svgfiles" :key="index" :name="index + ''" :label="item.name">
-          <el-form label-position="left" :model="rowDialog.form" label-width="60px">
-            <el-form-item label="内容">
-              <el-input type="textarea" v-model="item.content"></el-input>
-            </el-form-item>
-            <el-form-item label="颜色">
-              <el-color-picker v-model="item.fill" show-alpha :predefine="predefineColors"></el-color-picker>
-            </el-form-item>
-            <el-form-item label="类型">
-              <el-radio-group v-model="item.type">
-                <el-radio v-for="item in SVGFILE_TYPE_DETAIL" :key="item.id" :label="item.id" border>{{item.name}}</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item>
-              <el-button @click="handleSvgfileAdd">添加</el-button>
-              <el-button v-if="!item.id" type="primary" @click="handleSvgfileCreate(item)">确定</el-button>
-              <el-button v-if="item.id" type="primary" @click="handleSvgfileUpdate(item)">更新</el-button>
-              <el-button v-if="item.id" @click="handleSvgfileDelete(item, index)">删除</el-button>
-            </el-form-item>
-          </el-form>
-        </el-tab-pane>
-      </el-tabs>
+
+      <el-table :data="rowDialog.form.processes" style="width: 100%">
+        <el-table-column prop="viewDate" label="日期"></el-table-column>
+        <el-table-column prop="basic" label="基础结构" width="80"></el-table-column>
+        <el-table-column prop="layers" label="主体结构" width="80"></el-table-column>
+        <el-table-column prop="seconds" label="二次结构" width="80"></el-table-column>
+
+        <el-table-column fixed="right" label="操作" width="100">
+          <template slot-scope="scope">
+            <el-button @click="handleProcessDelete(scope.row)" type="text" size="small">查看</el-button>
+          </template>
+        </el-table-column>
+
+      </el-table>
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="rowDialog.visible = false">关 闭</el-button>
@@ -56,9 +53,10 @@ import { DIALOG_MODE } from '@/common/const'
 import { SVGFILE_FORM } from '@/common/const/form'
 import Build from '@/components/Build/Build'
 import BuildList from '@/components/BuildList/BuildList'
+import DmList from '@/components/DmList/DmList'
 
 export default {
-  components: { Build, BuildList },
+  components: { DmList, Build, BuildList },
   data() {
     return {
       showMode: BUILD_SHOW_MODE.STRUCTURE,
@@ -116,11 +114,11 @@ export default {
       this.initList()
     },
 
-    handleSvgfileAdd() {
+    handleProcessAdd() {
       this.rowDialog.form.svgfiles.push(deepClone(SVGFILE_FORM))
     },
 
-    async handleSvgfileCreate(data) {
+    async handleProcessCreate(data) {
       const bid = this.rowDialog.form.id
       data.bid = bid
       const ret = await BTL.svgfileCreate(data)
@@ -131,7 +129,7 @@ export default {
       data.id = ret.id
     },
 
-    async handleSvgfileDelete(data, index) {
+    async handleProcessDelete(data, index) {
       this.$confirm('确定删除?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -146,7 +144,7 @@ export default {
       })
     },
 
-    async handleSvgfileUpdate(data) {
+    async handleProcessUpdate(data) {
       const ret = await BTL.svgfileUpdate(data.id, data)
       this.$message({
         message: '修改成功',

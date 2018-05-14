@@ -52,7 +52,12 @@ export default {
   components: { BuildBase, BuildStructure, BuildSecound, BuildFrame },
 
   props: {
-    data: Object,
+    data: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+    },
     visibles: {
       type: Object,
       default: function () {
@@ -67,8 +72,7 @@ export default {
       type: Object,
       default: function () {
         return {
-          basic: 100,
-          layers: this.data.layers
+          basic: 100
         }
       }
     }
@@ -79,17 +83,23 @@ export default {
     }
   },
 
+
   computed: {
     structure() {
-      const svg = this.data.svgfiles.find(_ => _.type === SVGFILE_TYPE.STRUCTURE)
-      return svg ? svg['content'] : ''
+      if (this.data && this.data.svgfiles) {
+        const svg = this.data.svgfiles.find(_ => _.type === SVGFILE_TYPE.STRUCTURE)
+        return svg ? svg['content'] : ''
+      }
     },
     secounds() {
-      return this.data.svgfiles.filter(_ => _.type === SVGFILE_TYPE.SCOUNDS)
+      if (this.data && this.data.svgfiles) {
+        return this.data.svgfiles.filter(_ => _.type === SVGFILE_TYPE.SCOUNDS)
+      }
     }
   },
 
-  mounted() { },
+  mounted() {
+  },
 
   methods: {}
 }

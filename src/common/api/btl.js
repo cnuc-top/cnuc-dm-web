@@ -46,32 +46,32 @@ export default {
   },
 
   // City
-  cityCreate: function cityCreate(id) {
-    return request({
-      url: `${base}/v1/citys`,
-      method: 'post'
-    })
-  },
+  // cityCreate: function cityCreate(id) {
+  //   return request({
+  //     url: `${base}/v1/citys`,
+  //     method: 'post'
+  //   })
+  // },
 
-  cityUpdate: function cityUpdate(id) {
-    return request({
-      url: `${base}/v1/citys/${id}`,
-      method: 'put'
-    })
-  },
+  // cityUpdate: function cityUpdate(id) {
+  //   return request({
+  //     url: `${base}/v1/citys/${id}`,
+  //     method: 'put'
+  //   })
+  // },
 
-  cityList: function cityList(data) {
-    return request({
-      url: `${base}/v1/citys`,
-      data
-    })
-  },
+  // cityList: function cityList(data) {
+  //   return request({
+  //     url: `${base}/v1/citys`,
+  //     data
+  //   })
+  // },
 
-  cityId: function cityId(id) {
-    return request({
-      url: `${base}/v1/citys/${id}`
-    })
-  },
+  // cityId: function cityId(id) {
+  //   return request({
+  //     url: `${base}/v1/citys/${id}`
+  //   })
+  // },
 
   // Svgfile
   svgfileCreate: function svgfileCreate(data) {
@@ -98,37 +98,26 @@ export default {
   },
 
   // Processes
-  processCreate: function processCreate(id) {
+  processCreate: function processCreate(data) {
     return request({
       url: `${base}/v1/processes`,
-      method: 'post'
+      method: 'post',
+      data
     })
   },
 
   processDelete: function processDelete(id) {
     return request({
-      url: `${base}/v1/processes`,
+      url: `${base}/v1/processes/${id}`,
       method: 'delete'
     })
   },
 
-  processUpdate: function processUpdate(id) {
+  processUpdate: function processUpdate(id, data) {
     return request({
       url: `${base}/v1/processes/${id}`,
-      method: 'put'
-    })
-  },
-
-  processList: function processList(data) {
-    return request({
-      url: `${base}/v1/processes`,
+      method: 'put',
       data
-    })
-  },
-
-  processId: function processId(id) {
-    return request({
-      url: `${base}/v1/processes/${id}`
     })
   },
 

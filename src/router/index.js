@@ -51,16 +51,35 @@ export const constantRouterMap = [
     meta: { title: '建筑管理', icon: 'example' },
     children: [
       {
-        path: 'list',
+        path: 'buildings',
         name: 'Buildings-list',
-        component: () => import('@/pages/buildings/index'),
+        component: () => import('@/pages/buildings/list'),
         meta: { title: '所有建筑' }
+      },
+      {
+        path: 'buildings/:id',
+        name: 'Buildings-detail',
+        component: () => import('@/pages/buildings/detail'),
+        meta: { title: '建筑详情' },
+        hidden: true
       },
       {
         path: 'svgfiles',
         name: 'Buildings-svgfiles',
         component: () => import('@/pages/buildings/svgfiles'),
         meta: { title: '结构管理' }
+      },
+      {
+        path: 'processes',
+        name: 'Buildings-processes',
+        component: () => import('@/pages/buildings/processes'),
+        meta: { title: '进度管理' }
+      },
+      {
+        path: 'companies',
+        name: 'Buildings-companies',
+        component: () => import('@/pages/buildings/companies'),
+        meta: { title: '公司管理' }
       }
     ]
   },

@@ -1,3 +1,5 @@
+// import moment from 'moment'
+
 const BUILD_INFO = {
   name: '',
   width: 1,
@@ -14,7 +16,15 @@ const SVGFILE_FORM = {
   type: 2
 }
 
+const PROCESS_FORM = {
+  date: '',
+  base: 0,
+  layers: 0,
+  second: 0
+}
+
 module.exports = {
   BUILD_INFO,
-  SVGFILE_FORM
+  SVGFILE_FORM,
+  PROCESS_FORM
 }
