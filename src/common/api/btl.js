@@ -35,13 +35,13 @@ export default {
 
   buildingId: function buildingId(id) {
     return request({
-      url: `${base}/v1/buildings/${id}`,
+      url: `${base}/v1/buildings/${id}`
     })
   },
 
   buildingIdContribute: function buildingIdContribute(id) {
     return request({
-      url: `${base}/v1/buildings/${id}/contributes`,
+      url: `${base}/v1/buildings/${id}/contributes`
     })
   },
 
@@ -63,15 +63,37 @@ export default {
   cityList: function cityList(data) {
     return request({
       url: `${base}/v1/citys`,
-      method: 'get',
       data
     })
   },
 
   cityId: function cityId(id) {
     return request({
-      url: `${base}/v1/citys/${id}`,
-      method: 'get'
+      url: `${base}/v1/citys/${id}`
+    })
+  },
+
+  // Svgfile
+  svgfileCreate: function svgfileCreate(data) {
+    return request({
+      url: `${base}/v1/svgfiles`,
+      method: 'post',
+      data
+    })
+  },
+
+  svgfileDelete: function svgfileDelete(id) {
+    return request({
+      url: `${base}/v1/svgfiles/${id}`,
+      method: 'delete'
+    })
+  },
+
+  svgfileUpdate: function svgfileUpdate(id, data) {
+    return request({
+      url: `${base}/v1/svgfiles/${id}`,
+      method: 'put',
+      data
     })
   },
 
@@ -100,15 +122,13 @@ export default {
   processList: function processList(data) {
     return request({
       url: `${base}/v1/processes`,
-      method: 'get',
       data
     })
   },
 
   processId: function processId(id) {
     return request({
-      url: `${base}/v1/processes/${id}`,
-      method: 'get'
+      url: `${base}/v1/processes/${id}`
     })
   },
 
@@ -140,23 +160,20 @@ export default {
   contributeList: function contributeList(data) {
     return request({
       url: `${base}/v1/contributes`,
-      method: 'get',
       data
     })
   },
 
   contributeId: function contributeId(id) {
     return request({
-      url: `${base}/v1/contributes/${id}`,
-      method: 'get'
+      url: `${base}/v1/contributes/${id}`
     })
   },
 
   // token
   uploadToken: function uploadToken() {
     return request({
-      url: `${base}/v1/upload/token`,
-      method: 'get'
+      url: `${base}/v1/upload/token`
     })
   }
 }

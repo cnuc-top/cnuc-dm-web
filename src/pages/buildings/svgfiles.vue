@@ -15,9 +15,9 @@
       </el-pagination>
     </div>
 
-    <el-dialog class="dialog-build-svg" :title="rowDialog.title" :visible.sync="rowDialog.visible">
+    <el-dialog :close-on-click-modal="false" class="dialog-build-svg" :title="rowDialog.title" :visible.sync="rowDialog.visible">
       <build :data="rowDialog.form"></build>
-      <el-tabs @tab-add="handleAddSvgFile" @tab-remove="handleRemoveSvgFile" editable tab-position="left">
+      <el-tabs @tab-add="handleSvgfileAdd" tab-position="left">
         <el-tab-pane v-for="(item, index) in svgfiles" :key="index" :name="index + ''" :label="item.name">
           <el-form label-position="left" :model="rowDialog.form" label-width="60px">
             <el-form-item label="内容">
@@ -31,13 +31,18 @@
                 <el-radio v-for="item in SVGFILE_TYPE_DETAIL" :key="item.id" :label="item.id" border>{{item.name}}</el-radio>
               </el-radio-group>
             </el-form-item>
+            <el-form-item>
+              <el-button @click="handleSvgfileAdd">添加</el-button>
+              <el-button v-if="!item.id" type="primary" @click="handleSvgfileCreate(item)">确定</el-button>
+              <el-button v-if="item.id" type="primary" @click="handleSvgfileUpdate(item)">更新</el-button>
+              <el-button v-if="item.id" @click="handleSvgfileDelete(item, index)">删除</el-button>
+            </el-form-item>
           </el-form>
         </el-tab-pane>
       </el-tabs>
 
       <div slot="footer" class="dialog-footer">
-        <el-button @click="rowDialog.visible = false">取 消</el-button>
-        <el-button v-if="rowDialog.mode === DIALOG_MODE.UPDATE" type="primary" @click="handleSvgFilesUpdate">确 定</el-button>
+        <el-button @click="rowDialog.visible = false">关 闭</el-button>
       </div>
     </el-dialog>
   </div>
@@ -103,13 +108,6 @@ export default {
     }
   },
 
-  watch: {
-
-    svgfiles(val) {
-      console.log(val)
-    }
-  },
-
   mounted() {
     this.initList()
   },
@@ -133,45 +131,42 @@ export default {
       this.initList()
     },
 
-    async handleSvgFilesCreate() {
-      // const {oDa} = this.rowDialog.form
+    handleSvgfileAdd() {
+      this.rowDialog.form.svgfiles.push(deepClone(SVGFILE_FORM))
+    },
+
+    async handleSvgfileCreate(data) {
+      const bid = this.rowDialog.form.id
+      data.bid = bid
+      const ret = await BTL.svgfileCreate(data)
       this.$message({
         message: '添加成功',
         type: 'success'
       })
-      this.initList()
-      setTimeout(() => {
-        this.rowDialog.visible = false
-      }, 300)
+      data.id = ret.id
     },
 
-    async handleSvgFilesUpdate() {
-      const svgfiles = this.rowDialog.form
-      const ret = await BTL.buildingUpdate(data.id, data)
+    async handleSvgfileDelete(data, index) {
+      this.$confirm('确定删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        await BTL.svgfileDelete(data.id)
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+        this.svgfiles.splice(index, 1)
+      })
+    },
 
-      return
+    async handleSvgfileUpdate(data) {
+      const ret = await BTL.svgfileUpdate(data.id, data)
       this.$message({
         message: '修改成功',
         type: 'success'
       })
-      this.initList()
-      setTimeout(() => {
-        this.rowDialog.visible = false
-      }, 300)
-    },
-
-    handleAddSvgFile() {
-      this.rowDialog.form.svgfiles.push(deepClone(SVGFILE_FORM))
-    },
-
-    handleRemoveSvgFile(name) {
-      this.rowDialog.form.svgfiles.find(deepClone(SVGFILE_FORM))
-    },
-
-
-    handleRemoveSvgFile(index) {
-      const { svgfiles } = this
-      svgfiles.splice(index, 1)
     },
 
     dialogUpdateOpen(data) {

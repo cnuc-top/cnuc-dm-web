@@ -9,9 +9,9 @@ const BUILD_INFO = {
 }
 
 const SVGFILE_FORM = {
-  fill: '',
-  type: 2,
   content: '',
+  fill: '',
+  type: 2
 }
 
 module.exports = {
