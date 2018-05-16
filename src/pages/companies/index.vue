@@ -34,6 +34,9 @@
         <el-form-item label="官网">
           <el-input v-model="rowDialog.form.webUrl"></el-input>
         </el-form-item>
+        <el-form-item label="封面图">
+          <dm-upload :src.sync="rowDialog.form.logoUrl"></dm-upload>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="rowDialog.visible = false">取 消</el-button>
@@ -51,9 +54,10 @@ import { DIALOG_MODE, DIALOG_MODE_DETAIL } from '@/common/const'
 import { COMPANY_TYPE_DETAIL } from '@/common/const/cnuc'
 import { COMPANY_FORM } from '@/common/const/form'
 import CompanyType from '@/components/Company/CompanyType'
+import DmUpload from '@/components/DmUpload/DmUpload'
 
 export default {
-  components: { CompanyType },
+  components: { CompanyType, DmUpload },
 
   props: {
     info: Object

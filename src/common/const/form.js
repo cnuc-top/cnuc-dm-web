@@ -30,12 +30,13 @@ const COMPANY_FORM = {
   picUrl: ''
 }
 
-const CONTRIBUTE_FORM = {
+const TIMELINE_FORM = {
   picUrl: '',
   content: '',
   date: '',
   bid: '',
-  type: 1
+  type: 1,
+  attachments: []
 }
 
 module.exports = {
@@ -43,5 +44,5 @@ module.exports = {
   SVGFILE_FORM,
   PROCESS_FORM,
   COMPANY_FORM,
-  CONTRIBUTE_FORM
+  TIMELINE_FORM
 }

@@ -1,5 +1,5 @@
 <style lang='stylus'>
-.contribute-img {
+.timeline-img {
   width: 125px;
 }
 </style>
@@ -13,7 +13,7 @@
         <el-table :data="data">
           <el-table-column prop="picUrl" label="图片">
             <template slot-scope="scope">
-              <img class="contribute-img" :src="scope.row.picUrl" alt="">
+              <img class="timeline-img" :src="scope.row.picUrl" alt="">
             </template>
           </el-table-column>
           <el-table-column prop="viewDate" label="日期">
@@ -33,7 +33,7 @@
           <el-table-column fixed="right" label="操作" width="200">
             <template slot-scope="scope">
               <el-button @click.native.prevent="dialogUpdateOpen(scope.row)" size="small">编辑</el-button>
-              <el-button @click.native.prevent="handleContributeDelete(scope.row)" size="small">删除</el-button>
+              <el-button @click.native.prevent="handleTimelineDelete(scope.row)" size="small">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -59,8 +59,9 @@
             <el-radio v-for="item in CONTRIBUTE_TYPE_DETAIL" :key="item.id" :label="item.id" border>{{item.name}}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="图片">
-          <dm-upload :src.sync="rowDialog.form.picUrl"></dm-upload>
+        <el-form-item label="附件">
+          {{rowDialog.form.attachments}}
+          <dm-upload-list :list.sync="rowDialog.form.attachments"></dm-upload-list>
         </el-form-item>
         <el-form-item label="审核" v-if="rowDialog.mode === DIALOG_MODE.UPDATE">
           <el-checkbox v-model="rowDialog.form.isActive" label="通过审核" border></el-checkbox>
@@ -68,8 +69,8 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="rowDialog.visible = false">取 消</el-button>
-        <el-button v-if="rowDialog.mode === DIALOG_MODE.CREATE" type="primary" @click="handleContributeCreate">添 加</el-button>
-        <el-button v-if="rowDialog.mode === DIALOG_MODE.UPDATE" type="primary" @click="handleContributeUpdate">确 定</el-button>
+        <el-button v-if="rowDialog.mode === DIALOG_MODE.CREATE" type="primary" @click="handleTimelineCreate">添 加</el-button>
+        <el-button v-if="rowDialog.mode === DIALOG_MODE.UPDATE" type="primary" @click="handleTimelineUpdate">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -80,13 +81,13 @@
 import BTL from '@/common/api/btl'
 import { deepClone } from '@/utils/object'
 import TagActive from '@/components/Tag/TagActive'
-import DmUpload from '@/components/DmUpload/DmUpload'
+import DmUploadList from '@/components/DmUpload/DmUploadList'
 import { DIALOG_MODE, DIALOG_MODE_DETAIL } from '@/common/const'
-import { CONTRIBUTE_FORM } from '@/common/const/form'
+import { TIMELINE_FORM } from '@/common/const/form'
 import { CONTRIBUTE_TYPE, CONTRIBUTE_TYPE_DETAIL } from '@/common/const/cnuc'
 
 export default {
-  components: { TagActive, DmUpload },
+  components: { TagActive, DmUploadList },
 
   props: {
   },
@@ -123,7 +124,7 @@ export default {
     dialogCreateOpen() {
       this.rowDialog.title = DIALOG_MODE_DETAIL.find(_ => _.id === DIALOG_MODE.CREATE)['title']
       this.rowDialog.mode = DIALOG_MODE.CREATE
-      this.rowDialog.form = deepClone(CONTRIBUTE_FORM)
+      this.rowDialog.form = deepClone(TIMELINE_FORM)
       this.rowDialog.visible = true
     },
 
@@ -134,9 +135,9 @@ export default {
       this.rowDialog.visible = true
     },
 
-    async handleContributeCreate() {
+    async handleTimelineCreate() {
       const data = this.rowDialog.form
-      const ret = await BTL.contributeCreate(data)
+      const ret = await BTL.timelineCreate(data)
       this.$message({
         message: '添加成功',
         type: 'success'
@@ -147,13 +148,13 @@ export default {
       }, 300)
     },
 
-    async handleContributeDelete(data) {
+    async handleTimelineDelete(data) {
       this.$confirm('确定删除?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        await BTL.contributeDelete(data.id)
+        await BTL.timelineDelete(data.id)
         this.$message({
           type: 'success',
           message: '删除成功!'
@@ -162,9 +163,9 @@ export default {
       })
     },
 
-    async handleContributeUpdate() {
+    async handleTimelineUpdate() {
       const data = this.rowDialog.form
-      const ret = await BTL.contributeUpdate(data.id, data)
+      const ret = await BTL.timelineUpdate(data.id, data)
       this.$message({
         message: '修改成功',
         type: 'success'
@@ -183,7 +184,7 @@ export default {
         limit
       }
 
-      const { data } = await BTL.contributeList(params)
+      const { data } = await BTL.timelineList(params)
       const { list, total } = data
       this.data = list
       this.total = total

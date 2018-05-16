@@ -180,34 +180,43 @@ export default {
     })
   },
 
-  // Contributes
-  contributeCreate: function contributeCreate(data) {
+  // Timelines
+  timelineCreate: function timelineCreate(data) {
     return request({
-      url: `${base}/v1/contributes`,
+      url: `${base}/v1/timelines`,
       method: 'post',
       data
     })
   },
 
-  contributeDelete: function contributeDelete(id) {
+  timelineDelete: function timelineDelete(id) {
     return request({
-      url: `${base}/v1/contributes/${id}`,
+      url: `${base}/v1/timelines/${id}`,
       method: 'delete'
     })
   },
 
-  contributeUpdate: function contributeUpdate(id, data) {
+  timelineUpdate: function timelineUpdate(id, data) {
     return request({
-      url: `${base}/v1/contributes/${id}`,
+      url: `${base}/v1/timelines/${id}`,
       method: 'put',
       data
     })
   },
 
-  contributeList: function contributeList(data) {
+  timelineList: function timelineList(data) {
     return request({
-      url: `${base}/v1/contributes`,
+      url: `${base}/v1/timelines`,
       params: data
+    })
+  },
+
+  // Attachments
+  attachmentsCreate: function attachmentsCreate(data) {
+    return request({
+      url: `${base}/v1/attachments`,
+      method: 'post',
+      data
     })
   },
 
